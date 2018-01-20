@@ -9,6 +9,24 @@ It includes only basic concepts.
 - Mining with Proof of Work
 - Chain validation and consensus conflicts
 
+## Modules
+
+**bold** is core function.
+
+- blockchain : chain structure /w blocks
+    - **new_block**: make block /w hash of previous block and current proof
+    - **valid**: validate chain rules of all chain
+- block : block structure
+    - **hash**: hash itself
+- proof : proof of work
+    - **find_proof**
+    - **valid_proof**
+- transaction : data object
+- book : book of transactions
+    - **check_balance** /w transaction history of sender account
+- node
+    - **consensus_with_neighbor**
+
 ## Endpoints
 
 - `/transaction` : Add a transaction and get pending transactions.
@@ -63,6 +81,7 @@ python app.py --port 5001
 
 - Python >= 3.6
 - Flask >= 0.12
+- Requests >= 2.18
 
 ## References
 
