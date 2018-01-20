@@ -19,6 +19,11 @@ class Node:
     def __len__(self):
         return len(self.neighbor)
 
+    @staticmethod
+    def fetch_neighbor_chain(address):
+        res = requests.get('{0}/chain'.format(address))
+        return res.json()
+
     def consensus_with_neighbor(self, blockchain):
         """Consensus conflicts with neighbor
 
@@ -34,8 +39,7 @@ class Node:
         max_length = len(blockchain)
 
         for node in self.neighbor:
-            res = requests.get('{0}/chain'.format(node))
-            data = res.json()
+            data = self.fetch_neighbor_chain(node)
 
             if data['length'] > max_length:
                 new_blockchain = BlockChain(chain=data['chain'])

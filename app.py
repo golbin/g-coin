@@ -2,7 +2,6 @@ from argparse import ArgumentParser
 
 from flask import Flask, jsonify, request
 
-import gcoin.proof as proof
 from gcoin.node import Node
 from gcoin.miner import Miner
 from gcoin.blockchain import BlockChain

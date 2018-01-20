@@ -25,27 +25,6 @@ class BlockChain:
         block = Block([])
         self.add_block(block)
 
-    def load_chain(self, chain):
-        """load chain from list of dictionary
-        from existing blockchain
-
-        Args:
-            chain (list):
-                [{
-                    transactions: [{
-                        sender: 'dsf9s9f0ad'
-                        recipient: 'dfsad90fasf'
-                        amount: 12
-                    }]
-                    proof: 318832940000
-                    previous_hash: 'fj9afje9ajf9sef0s0f'
-                    timestamp: 1506057125.900785
-                }]
-        """
-        for block in chain:
-            block = Block.init_from_json(block)
-            self.add_block(block)
-
     def add_transaction(self, transaction):
         """Add new transaction
         It will only add amount
@@ -75,18 +54,9 @@ class BlockChain:
 
         return block
 
-    def last_block(self):
-        return self.chain[-1]
-
     def add_block(self, block):
         self.chain.append(block)
         self.book.apply(block.transactions)
-
-    def dump(self):
-        return [block.dump() for block in self.chain]
-
-    def __len__(self):
-        return len(self.chain)
 
     def valid(self):
         """Valid chain"""
@@ -108,3 +78,33 @@ class BlockChain:
             index += 1
 
         return True
+
+    def load_chain(self, chain):
+        """load chain from list of dictionary
+        from existing blockchain
+
+        Args:
+            chain (list):
+                [{
+                    transactions: [{
+                        sender: 'dsf9s9f0ad'
+                        recipient: 'dfsad90fasf'
+                        amount: 12
+                    }]
+                    proof: 318832940000
+                    previous_hash: 'fj9afje9ajf9sef0s0f'
+                    timestamp: 1506057125.900785
+                }]
+        """
+        for block in chain:
+            block = Block.init_from_json(block)
+            self.add_block(block)
+
+    def last_block(self):
+        return self.chain[-1]
+
+    def dump(self):
+        return [block.dump() for block in self.chain]
+
+    def __len__(self):
+        return len(self.chain)
