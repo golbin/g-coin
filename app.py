@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 
 import gcoin.proof as proof
 from gcoin.node import Node
+from gcoin.miner import Miner
 from gcoin.blockchain import BlockChain
 from gcoin.transaction import Transaction
 
@@ -11,6 +12,7 @@ from gcoin.transaction import Transaction
 app = Flask('g-coin')
 
 app.node = Node()
+app.miner = Miner(app.node.id)
 app.blockchain = BlockChain()
 
 
@@ -46,18 +48,7 @@ def mine():
     Have to make a standalone process
     But it's just a prototype
     """
-    last_block = app.blockchain.last_block()
-
-    # Proof of Work
-    new_proof = proof.find_proof(last_block.proof)
-
-    # Adding mining rewards
-    transaction = Transaction('0', app.node.id, 1)
-    app.blockchain.add_transaction(transaction)
-
-    # Make new block with new proof,
-    #   transactions and hash of last block
-    block = app.blockchain.new_block(new_proof)
+    block = app.miner(app.blockchain)
 
     response = {
         'message': "New block is mined!",

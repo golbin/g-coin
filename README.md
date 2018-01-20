@@ -21,6 +21,7 @@ It includes only basic concepts.
 - proof : proof of work
     - **find_proof**
     - **valid_proof**
+- miner : Mining new block and get rewards
 - transaction : data object
 - book : book of transactions
     - **check_balance** /w transaction history of sender account
