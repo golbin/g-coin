@@ -8,7 +8,7 @@ def valid_proof(last_proof, proof):
     """ Validates proof
 
     last digits of hash(last_proof, proof)
-        == PROOF_SEQUENCE
+        == VALID_DIGITS
 
     Args:
         last_proof (int): previous proof
