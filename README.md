@@ -23,6 +23,10 @@ It includes only basic concepts.
 - Download [Insomnia](https://insomnia.rest/)
 - Import from insomnia.json
 
+![](images/mining.png)
+
+![](images/transaction.png)
+
 ### Try like this
 
 - First try
