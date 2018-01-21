@@ -51,15 +51,14 @@ def mine():
 
     response = {
         'message': "New block is mined!",
-        'proof': block.proof,
-        'previous_hash': block.previous_hash
+        'block': block.dump()
     }
 
     return jsonify(response), 200
 
 
 @app.route('/chain', methods=['GET'])
-def full_chain():
+def get_full_chain():
     response = {
         'chain': app.blockchain.dump(),
         'length': len(app.blockchain)
