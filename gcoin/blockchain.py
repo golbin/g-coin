@@ -38,7 +38,7 @@ class BlockChain:
         """
         if self.book.check_balance(transaction):
             self.transactions.append(transaction)
-            return len(self.chain) + 1
+            return len(self.chain) + 1  # Add this transaction to next block
         else:
             raise Exception('Transaction is wrong.')
 
