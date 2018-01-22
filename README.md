@@ -9,6 +9,12 @@ It includes only basic concepts.
 - Mining with Proof of Work
 - Chain validation and consensus conflicts
 
+Articles (Korean)
+
+- [골빈해커님의 g-coin 분석 1부](https://tykimos.github.io/2018/01/21/g_coin_analysis_part1)
+- [골빈해커님의 g-coin 분석 2부](https://tykimos.github.io/2018/01/21/g_coin_analysis_part2)
+- 골빈해커님의 g-coin 분석 3부 (Comming soon)
+
 ## Modules
 
 **bold** is core function.
