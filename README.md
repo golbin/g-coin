@@ -37,6 +37,22 @@ It includes only basic concepts.
 - `/chain/valid` : Valid chain
 - `/chain/consensus` : Consensus conflicts
 
+## Basic Flow
+
+- `/transaction`: Add trasaction for sending coin.
+    - Check balance and add to blockchain
+    - Use '0' as a sender id at the first time. It's the genesis wallet.
+- `/mine`: Mining for making block.
+    - Find proof with previous proof
+    - Add a reward to transactions
+    - Make a new block with proof and hash of previous block
+    - Add the block to chain of blocks
+    - Clear current transactions
+- `/chain/consensus`: Consensus conflicts with neighbor nodes.
+    - Fetch blockchain from all neighbor nodes.
+    - Check which has the longest chain and valiates it's chain.
+    - Add neighbor nodes before do this using `/node`
+
 ### Try using Insomnia
 
 - Download [Insomnia](https://insomnia.rest/)
@@ -45,7 +61,11 @@ It includes only basic concepts.
 ![](images/transaction.png)
 ![](images/mining.png)
 
-### Try like this
+### Mining practice
+
+```bash
+python app.py --port 5000
+```
 
 - First try
     - POST `/transaction`
@@ -63,7 +83,7 @@ It includes only basic concepts.
     - POST `/mine`
     - GET `/chain`
 
-### Try endpoints to run two daemons.
+### Consensus practice
 
 ```bash
 python app.py --port 5000
