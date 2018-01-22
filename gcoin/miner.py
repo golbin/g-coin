@@ -1,9 +1,6 @@
+import gcoin.config as cfg
 import gcoin.proof as proof
 from gcoin.transaction import Transaction
-
-
-GENESIS_ACCOUNT_ID = '0'
-AMOUNT_OF_REWARD = 1
 
 
 class Miner:
@@ -17,8 +14,8 @@ class Miner:
         new_proof = proof.find_proof(last_block.proof)
 
         # Adding mining rewards
-        transaction = Transaction(GENESIS_ACCOUNT_ID,
-                                  self.account_id, AMOUNT_OF_REWARD)
+        transaction = Transaction(cfg.GENESIS_ACCOUNT_ID,
+                                  self.account_id, cfg.AMOUNT_OF_REWARD)
         blockchain.add_transaction(transaction)
 
         # Make new block with new proof,

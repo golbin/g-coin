@@ -1,4 +1,5 @@
 """account book"""
+import gcoin.config as cfg
 
 
 class Account:
@@ -28,7 +29,7 @@ class Book:
         Returns:
             bool:
         """
-        if transaction.sender == '0':  # for mining rewards
+        if transaction.sender == cfg.GENESIS_ACCOUNT_ID:  # for mining rewards
             return True
         if transaction.sender in self.account:
             account = self.account[transaction.sender]

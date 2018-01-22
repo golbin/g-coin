@@ -2,6 +2,7 @@ import json
 import hashlib
 from time import time
 
+import gcoin.config as cfg
 from gcoin.transaction import Transaction
 
 
@@ -17,9 +18,9 @@ class Block:
             timestamp (float):
         """
         self.transactions = transactions
-        self.proof = proof if proof else 10
+        self.proof = proof if proof else cfg.GENESIS_PROOF
         self.timestamp = timestamp if timestamp else time()
-        self.previous_hash = previous_hash if previous_hash else 'g'
+        self.previous_hash = previous_hash if previous_hash else cfg.GENESIS_HASH
 
     def hash(self):
         """Make hash of current block"""

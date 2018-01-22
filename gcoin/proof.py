@@ -1,14 +1,13 @@
 import hashlib
 
-DIFFICULTY = 1  # number of digits is difficulty
-VALID_DIGITS = '0' * DIFFICULTY
+import gcoin.config as cfg
 
 
 def valid_proof(last_proof, proof):
     """ Validates proof
 
     last digits of hash(last_proof, proof)
-        == VALID_DIGITS
+        == config.VALID_DIGITS
 
     Args:
         last_proof (int): previous proof
@@ -20,7 +19,7 @@ def valid_proof(last_proof, proof):
     proof_seed = '{0}{1}'.format(last_proof, proof).encode()
     proof_hash = hashlib.sha256(proof_seed).hexdigest()
 
-    return proof_hash[:DIFFICULTY] == VALID_DIGITS
+    return proof_hash[:cfg.DIFFICULTY] == cfg.VALID_DIGITS
 
 
 def find_proof(last_proof):
