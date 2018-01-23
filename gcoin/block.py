@@ -2,8 +2,46 @@ import json
 import hashlib
 from time import time
 
-import gcoin.config as cfg
 from gcoin.transaction import Transaction
+
+
+class BlockHeader:
+    def __init__(self, proof=0, previous_hash=None, timestamp=0):
+        """Block
+
+        Args:
+            proof (int):
+            previous_hash (str):
+            timestamp (float):
+        """
+        self.proof = proof
+        self.previous_hash = previous_hash
+        self.timestamp = timestamp if timestamp else time()
+
+    def hash(self):
+        """Make hash of a header of current block for finding proof
+
+        Don't use 'proof' because there is no 'proof' in new block at the first time.
+        """
+        header_dump = self.dump()
+        header_dump.pop('proof', None)
+        header_dump = json.dumps(header_dump, sort_keys=True).encode()
+        header_hash = hashlib.sha256(header_dump).hexdigest()
+
+        return header_hash
+
+    def dump(self):
+        return {
+            'previous_hash': self.previous_hash,
+            'proof': self.proof,
+            'timestamp': self.timestamp
+        }
+
+    @classmethod
+    def init_from_json(cls, data):
+        return cls(data['proof'],
+                   data['previous_hash'],
+                   data['timestamp'])
 
 
 class Block:
@@ -18,9 +56,19 @@ class Block:
             timestamp (float):
         """
         self.transactions = transactions
-        self.proof = proof if proof else cfg.GENESIS_PROOF
-        self.timestamp = timestamp if timestamp else time()
-        self.previous_hash = previous_hash if previous_hash else cfg.GENESIS_HASH
+        self.header = BlockHeader(proof, previous_hash, timestamp)
+
+    @property
+    def previous_hash(self):
+        return self.header.previous_hash
+
+    @property
+    def proof(self):
+        return self.header.proof
+
+    @proof.setter
+    def proof(self, value):
+        self.header.proof = value
 
     def hash(self):
         """Make hash of current block"""
@@ -31,10 +79,8 @@ class Block:
 
     def dump(self):
         return {
-            'transactions': [t.dump() for t in self.transactions],
-            'previous_hash': self.previous_hash,
-            'proof': self.proof,
-            'timestamp': self.timestamp
+            'header': self.header.dump(),
+            'transactions': [t.dump() for t in self.transactions]
         }
 
     @classmethod
@@ -43,6 +89,7 @@ class Block:
                         for t in data['transactions']]
 
         return cls(transactions,
-                   data['proof'],
-                   data['previous_hash'],
-                   data['timestamp'])
+                   data['header']['proof'],
+                   data['header']['previous_hash'],
+                   data['header']['timestamp'])
+

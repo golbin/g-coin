@@ -1,6 +1,5 @@
 # for the first chain
 GENESIS_HASH = 'g'
-GENESIS_PROOF = 10
 
 # for mining rewards
 GENESIS_ACCOUNT_ID = '0'

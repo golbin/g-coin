@@ -1,4 +1,5 @@
 import gcoin.proof
+import gcoin.config as cfg
 from gcoin.book import Book
 from gcoin.block import Block
 
@@ -21,9 +22,14 @@ class BlockChain:
             self.init_chain()
 
     def init_chain(self):
-        """Init genesis chain"""
-        block = Block([])
-        self.add_block(block)
+        """Make genesis block"""
+        genesis_block = Block([], previous_hash=cfg.GENESIS_HASH)
+
+        genesis_proof = gcoin.proof.find_proof(genesis_block)
+
+        genesis_block.proof = genesis_proof
+
+        self.add_block(genesis_block)
 
     def add_transaction(self, transaction):
         """Add new transaction
@@ -42,13 +48,11 @@ class BlockChain:
         else:
             raise Exception('Transaction is wrong.')
 
-    def new_block(self, proof):
+    def new_block(self):
         last_block = self.chain[-1]
 
-        block = Block(self.transactions, proof,
+        block = Block(self.transactions,
                       previous_hash=last_block.hash())
-
-        self.add_block(block)
 
         self.transactions = []
 
@@ -70,9 +74,8 @@ class BlockChain:
             if curr_block.previous_hash != prev_block.hash():
                 return False
 
-            # Check proof with previous proof
-            if not gcoin.proof.valid_proof(prev_block.proof,
-                                           curr_block.proof):
+            # Check proof of current block
+            if not gcoin.proof.valid_proof(curr_block):
                 return False
 
             index += 1

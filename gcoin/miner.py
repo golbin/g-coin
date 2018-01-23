@@ -8,18 +8,20 @@ class Miner:
         self.account_id = account_id
 
     def __call__(self, blockchain):
-        last_block = blockchain.last_block()
-
-        # Proof of Work
-        new_proof = proof.find_proof(last_block.proof)
-
         # Adding mining rewards
         transaction = Transaction(cfg.GENESIS_ACCOUNT_ID,
                                   self.account_id, cfg.AMOUNT_OF_REWARD)
         blockchain.add_transaction(transaction)
 
-        # Make new block with new proof,
-        #   transactions and hash of last block
-        block = blockchain.new_block(new_proof)
+        # Make new block with transactions and hash of last block
+        new_block = blockchain.new_block()
 
-        return block
+        # Proof of Work
+        new_proof = proof.find_proof(new_block)
+
+        new_block.proof = new_proof
+
+        blockchain.add_block(new_block)
+
+        return new_block
+
