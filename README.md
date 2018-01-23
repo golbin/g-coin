@@ -112,6 +112,7 @@ python app.py --port 5001
 
 ## TODO
 
+- [ ] Merkle root implementation
 - [ ] Check balance in transactions in next blocks
 - [ ] Fix balance of genesis account
 - [ ] Broadcast transactions
