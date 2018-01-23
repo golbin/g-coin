@@ -7,7 +7,7 @@ def valid_proof(block, proof=None):
     """ Validates proof
 
     last digits of hash(previous_block.header, proof)
-        == config.VALID_DIGITS
+        == config.PROOF_DIGITS
 
     Args:
         block (obj):
@@ -23,7 +23,7 @@ def valid_proof(block, proof=None):
 
     proof_hash = hashlib.sha256(proof_seed).hexdigest()
 
-    return proof_hash[:cfg.DIFFICULTY] == cfg.VALID_DIGITS
+    return proof_hash[:block.difficulty] == cfg.PROOF_DIGITS * block.difficulty
 
 
 def find_proof(block):

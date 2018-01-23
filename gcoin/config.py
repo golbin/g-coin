@@ -7,4 +7,5 @@ AMOUNT_OF_REWARD = 1
 
 # for proof of work
 DIFFICULTY = 1  # number of digits is difficulty
-VALID_DIGITS = '0' * DIFFICULTY
+PROOF_DIGITS = '0'  # Finding PROOF_DIGITS * DIFFICULTY ('00', '000', ..) is proof of work
+

@@ -2,21 +2,25 @@ import json
 import hashlib
 from time import time
 
+import gcoin.config as cfg
 from gcoin.transaction import Transaction
 
 
 class BlockHeader:
-    def __init__(self, proof=0, previous_hash=None, timestamp=0):
+    def __init__(self, previous_hash=None, timestamp=0,
+                 difficulty=0, proof=0):
         """Block
 
         Args:
-            proof (int):
             previous_hash (str):
             timestamp (float):
+            difficulty (int):
+            proof (int):
         """
-        self.proof = proof
         self.previous_hash = previous_hash
         self.timestamp = timestamp if timestamp else time()
+        self.difficulty = difficulty if difficulty else cfg.DIFFICULTY
+        self.proof = proof
 
     def hash(self):
         """Make hash of a header of current block for finding proof
@@ -30,37 +34,44 @@ class BlockHeader:
 
         return header_hash
 
-    def dump(self):
-        return {
+    def dump(self, proof=True):
+        data = {
             'previous_hash': self.previous_hash,
-            'proof': self.proof,
-            'timestamp': self.timestamp
+            'timestamp': self.timestamp,
+            'difficulty': self.difficulty
         }
+
+        if proof:
+            data['proof'] = self.proof
+
+        return data
 
     @classmethod
     def init_from_json(cls, data):
-        return cls(data['proof'],
-                   data['previous_hash'],
-                   data['timestamp'])
+        return cls(data['previous_hash'],
+                   data['timestamp'],
+                   data['difficulty'],
+                   data['proof'])
 
 
 class Block:
-    def __init__(self, transactions, proof=0,
-                 previous_hash=None, timestamp=0):
+    def __init__(self, transactions, previous_hash=None):
         """Block
 
         Args:
             transactions (list): list of Transaction object
-            proof (int):
             previous_hash (str):
-            timestamp (float):
         """
         self.transactions = transactions
-        self.header = BlockHeader(proof, previous_hash, timestamp)
+        self.header = BlockHeader(previous_hash)
 
     @property
     def previous_hash(self):
         return self.header.previous_hash
+
+    @property
+    def difficulty(self):
+        return self.header.difficulty
 
     @property
     def proof(self):
@@ -88,8 +99,11 @@ class Block:
         transactions = [Transaction.init_from_json(t)
                         for t in data['transactions']]
 
-        return cls(transactions,
-                   data['header']['proof'],
-                   data['header']['previous_hash'],
-                   data['header']['timestamp'])
+        header = BlockHeader.init_from_json(data['header'])
+
+        self = cls(transactions)
+
+        self.header = header
+
+        return self
 
