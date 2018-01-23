@@ -110,6 +110,13 @@ python app.py --port 5001
 - Flask >= 0.12
 - Requests >= 2.18
 
+## TODO
+
+- [ ] Check balance in transactions in next blocks
+- [ ] Fix balance of genesis account
+- [ ] Broadcast transactions
+- [ ] Use DB
+
 ## References
 
 - http://ecomunsing.com/build-your-own-blockchain
