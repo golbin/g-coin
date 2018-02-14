@@ -123,4 +123,4 @@ python app.py --port 5001
 ## References
 
 - http://ecomunsing.com/build-your-own-blockchain
-- https://qiita.com/hidehiro98/items/841ece65d896aeaa8a2a
+- https://hackernoon.com/learn-blockchains-by-building-one-117428612f46
