@@ -11,6 +11,8 @@ It includes only basic concepts.
 
 Articles (Korean)
 
+※ 아래 글은 최신 버전의 코드가 반영되어 있지 않습니다. 참고해주세요.
+
 - [골빈해커님의 g-coin 분석 1부](https://tykimos.github.io/2018/01/21/g_coin_analysis_part1)
 - [골빈해커님의 g-coin 분석 2부](https://tykimos.github.io/2018/01/21/g_coin_analysis_part2)
 - 골빈해커님의 g-coin 분석 3부 (Comming soon)
